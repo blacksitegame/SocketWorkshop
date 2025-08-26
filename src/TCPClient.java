@@ -6,8 +6,12 @@ public class TCPClient {
 
         TCPReceiverThread receiverThread = new TCPReceiverThread(clientSocket);
         TCPSendThread sendThread = new TCPSendThread(clientSocket);
-        receiverThread.start();
-        sendThread.start();
+        System.out.println("Venter på Server authorisation: ");
+        if (clientSocket.isConnected()){
+            System.out.println("Server authorisation received");
+            receiverThread.start();
+            sendThread.start();
+        }
 //        clientSocket.close();
     }
 }

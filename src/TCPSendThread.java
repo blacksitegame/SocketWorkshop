@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public class TCPSendThread extends Thread{
     private Socket socket;
-    private String message;
 
     public TCPSendThread(Socket socket) {
         this.socket = socket;
@@ -21,7 +20,6 @@ public class TCPSendThread extends Thread{
         while (!socket.isClosed()) {
             String line = scanner.nextLine();
             out.println(line); // sends line with newline and flushes
-            System.out.println(line);
         }
     }
 
