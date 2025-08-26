@@ -6,14 +6,15 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public static void main(String argv[]) throws Exception {
-
-        Socket clientSocket = new Socket("localhost", 6789);
+    while (true) {
+        Socket clientSocket = new Socket("10.10.131.157", 6789);
 
         TCPReceiverThread receiverThread = new TCPReceiverThread(clientSocket);
         TCPSendThread sendThread = new TCPSendThread(clientSocket);
         receiverThread.start();
         sendThread.start();
 //        clientSocket.close();
+    }
 }
 
 
