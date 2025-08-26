@@ -2,36 +2,36 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
 public class TCPSendThread extends Thread{
     private Socket socket;
-    private DataOutputStream outToClient;
-    private Scanner scanner;
+    private String message;
 
-    public TCPSendThread(Socket socket) throws IOException {
+    public TCPSendThread(Socket socket) {
         this.socket = socket;
-        this.outToClient = new DataOutputStream(socket.getOutputStream());
-        this.scanner = new Scanner(System.in);
     }
 
-    public void send(String message) throws IOException {
-        outToClient.writeBytes(message + "\n");
-        outToClient.flush();
+    public void send() throws IOException {
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true); // auto-flush on println
+        Scanner scanner = new Scanner(System.in);
+
+        while (!socket.isClosed()) {
+            String line = scanner.nextLine();
+            out.println(line); // sends line with newline and flushes
+            System.out.println(line);
+            if ("exit".equalsIgnoreCase(line)) {
+                socket.close();
+                break;
+            }
+        }
     }
 
     public void run(){
         try {
-            while (true){
-                String message = scanner.nextLine();
-                if(message.equalsIgnoreCase("quit")){
-                    socket.close();
-                    break;
-                }
-                send(message);
-
-            }
+            send();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
