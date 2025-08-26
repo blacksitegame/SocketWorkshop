@@ -16,7 +16,7 @@ public class TCPSendThread extends Thread{
         DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
         Scanner scanner = new Scanner(System.in);
 
-        outToClient.writeBytes(scanner.next());
+        outToClient.writeBytes(scanner.nextLine());
     }
 
     public void run(){

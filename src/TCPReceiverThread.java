@@ -2,25 +2,27 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class TCPReceiverThread extends Thread{
+public class TCPReceiverThread extends Thread {
     private Socket socket;
+    private BufferedReader inFromClient;
 
-    public TCPReceiverThread(Socket socket) {
+    public TCPReceiverThread(Socket socket) throws IOException {
         this.socket = socket;
+        this.inFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
     }
 
     public String receive() throws IOException {
-        String clientSentence;
-
-        BufferedReader inFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        clientSentence = inFromClient.readLine();
-        return clientSentence;
+        return inFromClient.readLine();
     }
 
     @Override
     public void run() {
         try {
-            System.out.println(receive());
+            String line;
+
+            while ((line = receive()) != null) {
+                System.out.println(line);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
