@@ -3,6 +3,7 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Scanner;
 
 
 public static void main(String[] args) throws Exception {
@@ -17,25 +18,13 @@ public static void main(String[] args) throws Exception {
             if (answer.equals("y")){
 
                     System.out.println("Klient forbundet til Server");
-                    receive(connectionSocket);
-                    send(connectionSocket);
+                    TCPReceiverThread receiverThread = new TCPReceiverThread(connectionSocket);
+                    TCPSendThread sendThread = new TCPSendThread(connectionSocket);
+                    receiverThread.start();
+                    sendThread.start();
             }
     }
 
 }
 
-public static String receive(Socket connectionSocket) throws IOException {
-    String clientSentence;
-
-    BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-    clientSentence = inFromClient.readLine();
-    return clientSentence;
-}
-
-public static void send(Socket connectionSocket) throws IOException {
-    DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-    Scanner scanner = new Scanner(System.in);
-
-    outToClient.writeBytes(scanner.next());
-}
 
