@@ -9,7 +9,7 @@ public static void main(String argv[]) throws Exception {
     while (true) {
         Socket clientSocket = new Socket("10.10.131.157", 6789);
 
-        receive(clientSocket);
+        System.out.println(receive(clientSocket));
         send(clientSocket);
         clientSocket.close();
     }
