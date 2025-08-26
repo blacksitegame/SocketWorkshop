@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -37,12 +38,9 @@ public static void send(Socket connectionSocket) throws IOException {
     DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
     Scanner scanner = new Scanner(System.in);
 
-                    clientSentence = inFromClient.readLine();
-                    System.out.println(clientSentence);
-                    capitalizedSentence = clientSentence.toUpperCase() + '\n';
-                    outToClient.writeBytes(capitalizedSentence);
-            }
+    outToClient.writeBytes(scanner.next());
     }
-
 }
+
+
 
