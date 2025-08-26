@@ -1,44 +1,32 @@
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Scanner;
 
 
 public static void main(String[] args) throws Exception {
 
+    String clientSentence;
+    String capitalizedSentence;
     ServerSocket welcomSocket = new ServerSocket(6789);
     System.out.println("Serveren venter på klient");
     Socket connectionSocket = welcomSocket.accept();
-    if (connectionSocket.isConnected()) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Ønsker du at chatte? (y/n)");
-        String answer = scanner.next();
-        if (answer.equals("y")) {
+        if (connectionSocket.isConnected()){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Ønsker du at chatte? (y/n)");
+            String answer = scanner.next();
+            if (answer.equals("y")){
+                    BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+                    DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+                    System.out.println("Klient forbundet til Server");
 
-            System.out.println("Klient forbundet til Server");
-            System.out.println(receive(connectionSocket));
-            send(connectionSocket);
-
-        }
+                    clientSentence = inFromClient.readLine();
+                    System.out.println(clientSentence);
+                    capitalizedSentence = clientSentence.toUpperCase() + '\n';
+                    outToClient.writeBytes(capitalizedSentence);
+            }
     }
 
-}
-
-public static String receive(Socket connectionSocket) throws IOException {
-    String clientSentence;
-
-    BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-    clientSentence = inFromClient.readLine();
-    return clientSentence;
-}
-
-public static void send(Socket connectionSocket) throws IOException {
-    DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-    Scanner scanner = new Scanner(System.in);
-
-    outToClient.writeBytes(scanner.next());
 }
 
