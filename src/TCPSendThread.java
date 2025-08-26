@@ -7,23 +7,31 @@ import java.util.Scanner;
 
 public class TCPSendThread extends Thread{
     private Socket socket;
-    private String message;
+    private DataOutputStream outToClient;
+    private Scanner scanner;
 
-    public TCPSendThread(Socket socket) {
+    public TCPSendThread(Socket socket) throws IOException {
         this.socket = socket;
+        this.outToClient = new DataOutputStream(socket.getOutputStream());
+        this.scanner = new Scanner(System.in);
     }
 
-    public void send() throws IOException {
-        DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
-        Scanner scanner = new Scanner(System.in);
-        message = scanner.nextLine();
-        outToClient.writeBytes(message);
-        System.out.println(message);
+    public void send(String message) throws IOException {
+        outToClient.writeBytes(message + "\n");
+        outToClient.flush();
     }
 
     public void run(){
         try {
-            send();
+            while (true){
+                String message = scanner.nextLine();
+                if(message.equalsIgnoreCase("quit")){
+                    socket.close();
+                    break;
+                }
+                send(message);
+
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
