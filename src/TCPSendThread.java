@@ -22,10 +22,6 @@ public class TCPSendThread extends Thread{
             String line = scanner.nextLine();
             out.println(line); // sends line with newline and flushes
             System.out.println(line);
-            if ("exit".equalsIgnoreCase(line)) {
-                socket.close();
-                break;
-            }
         }
     }
 

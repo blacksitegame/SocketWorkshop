@@ -10,7 +10,6 @@ public class  TCPServer{
 
         ServerSocket welcomSocket = new ServerSocket(6789);
         System.out.println("Serveren venter på klient");
-        while (true) {
             Socket connectionSocket = welcomSocket.accept();
             if (connectionSocket.isConnected()) {
                 Scanner scanner = new Scanner(System.in);
@@ -25,7 +24,6 @@ public class  TCPServer{
                     sendThread.start();
                 }
             }
-        }
     }
 }
 
