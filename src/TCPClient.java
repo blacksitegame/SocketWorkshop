@@ -6,7 +6,6 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public static void main(String argv[]) throws Exception {
-    while (true) {
         Socket clientSocket = new Socket("10.10.131.157", 6789);
 
         TCPReceiverThread receiverThread = new TCPReceiverThread(clientSocket);
@@ -14,7 +13,6 @@ public static void main(String argv[]) throws Exception {
         receiverThread.start();
         sendThread.start();
 //        clientSocket.close();
-    }
 }
 
 
