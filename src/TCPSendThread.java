@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class TCPSendThread extends Thread{
     private Socket socket;
+    private String message;
 
     public TCPSendThread(Socket socket) {
         this.socket = socket;
@@ -15,8 +16,9 @@ public class TCPSendThread extends Thread{
     public void send() throws IOException {
         DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
         Scanner scanner = new Scanner(System.in);
-
-        outToClient.writeBytes(scanner.nextLine());
+        message = scanner.nextLine();
+        outToClient.writeBytes(message);
+        System.out.println(message);
     }
 
     public void run(){
