@@ -17,7 +17,7 @@ public class  TCPServer{
                 String answer = scanner.next();
                 if (answer.equals("y")) {
                     DataOutputStream dataOutputStream = new DataOutputStream(connectionSocket.getOutputStream());
-                    dataOutputStream.writeBytes("Server Authorisation accepted");
+                    dataOutputStream.writeBytes("Server Authorisation accepted \n");
                     System.out.println("Klient forbundet til Server");
                     TCPReceiverThread receiverThread = new TCPReceiverThread(connectionSocket);
                     TCPSendThread sendThread = new TCPSendThread(connectionSocket);
