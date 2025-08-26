@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Scanner;
 
@@ -14,11 +15,18 @@ public class TCPSendThread extends Thread{
     }
 
     public void send() throws IOException {
-        DataOutputStream outToClient = new DataOutputStream(socket.getOutputStream());
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true); // auto-flush on println
         Scanner scanner = new Scanner(System.in);
-        message = scanner.nextLine();
-        outToClient.writeBytes(message);
-        System.out.println(message);
+
+        while (!socket.isClosed()) {
+            String line = scanner.nextLine();
+            out.println(line); // sends line with newline and flushes
+            System.out.println(line);
+            if ("exit".equalsIgnoreCase(line)) {
+                socket.close();
+                break;
+            }
+        }
     }
 
     public void run(){
