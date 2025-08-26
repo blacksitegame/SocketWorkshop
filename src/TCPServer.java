@@ -12,14 +12,21 @@ public static void main(String[] args) throws Exception {
     ServerSocket welcomSocket = new ServerSocket(6789);
     System.out.println("Serveren venter på klient");
     Socket connectionSocket = welcomSocket.accept();
-    BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-    DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-    System.out.println("Klient forbundet til Server");
+        if (connectionSocket.isConnected()){
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Ønsker du at chatte? (y/n)");
+            String answer = scanner.next();
+            if (answer.equals("y")){
+                    BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+                    DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+                    System.out.println("Klient forbundet til Server");
 
-    clientSentence = inFromClient.readLine();
-    System.out.println(clientSentence);
-    capitalizedSentence = clientSentence.toUpperCase() + '\n';
-    outToClient.writeBytes(capitalizedSentence);
+                    clientSentence = inFromClient.readLine();
+                    System.out.println(clientSentence);
+                    capitalizedSentence = clientSentence.toUpperCase() + '\n';
+                    outToClient.writeBytes(capitalizedSentence);
+            }
+    }
 
 }
 
