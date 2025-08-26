@@ -7,8 +7,6 @@ import java.net.Socket;
 
 public static void main(String[] args) throws Exception {
 
-    String clientSentence;
-    String capitalizedSentence;
     ServerSocket welcomSocket = new ServerSocket(6789);
     System.out.println("Serveren venter på klient");
     Socket connectionSocket = welcomSocket.accept();
@@ -17,16 +15,27 @@ public static void main(String[] args) throws Exception {
             System.out.println("Ønsker du at chatte? (y/n)");
             String answer = scanner.next();
             if (answer.equals("y")){
-                    BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-                    DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-                    System.out.println("Klient forbundet til Server");
 
-                    clientSentence = inFromClient.readLine();
-                    System.out.println(clientSentence);
-                    capitalizedSentence = clientSentence.toUpperCase() + '\n';
-                    outToClient.writeBytes(capitalizedSentence);
+                    System.out.println("Klient forbundet til Server");
+                    receive(connectionSocket);
+                    send(connectionSocket);
             }
     }
 
+}
+
+public static String receive(Socket connectionSocket) throws IOException {
+    String clientSentence;
+
+    BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
+    clientSentence = inFromClient.readLine();
+    return clientSentence;
+}
+
+public static void send(Socket connectionSocket) throws IOException {
+    DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
+    Scanner scanner = new Scanner(System.in);
+
+    outToClient.writeBytes(scanner.next());
 }
 
