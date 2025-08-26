@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Scanner;
@@ -17,9 +16,9 @@ public class  TCPServer{
                 System.out.println("Ønsker du at chatte? (y/n)");
                 String answer = scanner.next();
                 if (answer.equals("y")) {
+                    DataOutputStream dataOutputStream = new DataOutputStream(connectionSocket.getOutputStream());
+                    dataOutputStream.writeBytes("Server Authorisation accepted");
                     System.out.println("Klient forbundet til Server");
-                    PrintWriter out = new PrintWriter(connectionSocket.getOutputStream(), true);
-                    out.println("Du har nu forbindelse");
                     TCPReceiverThread receiverThread = new TCPReceiverThread(connectionSocket);
                     TCPSendThread sendThread = new TCPSendThread(connectionSocket);
                     receiverThread.start();
