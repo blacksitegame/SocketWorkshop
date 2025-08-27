@@ -19,7 +19,6 @@ public class TCPReceiverThread extends Thread {
     public void run() {
         try {
             String line;
-
             while ((line = receive()) != null) {
                 System.out.println(line);
             }
