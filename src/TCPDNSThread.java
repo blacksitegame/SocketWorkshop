@@ -14,9 +14,9 @@ public class TCPDNSThread extends Thread{
         this.inFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.outToClient = new PrintWriter(socket.getOutputStream(), true);
 
-        CallNameIps.put("Jonas", "10.10.132.157 6789");
-        CallNameIps.put("Rasmus", "localhost 6789");
-        CallNameIps.put("Victor", "10.10.132.157 6789");
+        CallNameIps.put("Jonas", "10.10.131.169 6789 \n");
+        CallNameIps.put("Rasmus", "10.10.130.132 6789 \n");
+        CallNameIps.put("Victor", "10.10.132.157 6789 \n");
     }
 
     @Override
@@ -25,7 +25,7 @@ public class TCPDNSThread extends Thread{
             String callId = inFromClient.readLine();
             if (callId != null) {
                 outToClient.println(getIP(callId));
-                callId = null;
+
             }
 
         } catch (IOException e) {
