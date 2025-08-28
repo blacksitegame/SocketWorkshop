@@ -39,4 +39,22 @@ public class TCPDNSThread extends Thread{
         }
         return CallNameIps.get(CallId);
     }
+
+    public void addUserToDNS(String user, String IPandPort){
+        String cleanUser = user.trim();
+        String cleanIPandPort = IPandPort.trim();
+
+        if(CallNameIps.containsKey(user)){
+            throw new IllegalArgumentException("User already exists in the list");
+        }
+
+        CallNameIps.put(cleanUser,cleanIPandPort);
+    }
+
+    public void printUserList(){
+        for (String user : CallNameIps.keySet()) {
+            String ipAndPort = CallNameIps.get(user);
+            System.out.println(user + "->" + ipAndPort);
+        }
+    }
 }

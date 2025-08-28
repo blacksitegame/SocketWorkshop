@@ -6,17 +6,15 @@ import java.net.Socket;
 import java.util.Scanner;
 
 public class TCPClient {
-    private final static String DNSSERVER = "localhost";
+    private final static String DNSSERVER = "10.10.130.132";
     public static void main(String argv[]) throws Exception {
-
-        Socket clientSocket = connectToClient("Rasmus");
+        Socket clientSocket = connectToClient("Jonas");
         TCPReceiverThread receiverThread = new TCPReceiverThread(clientSocket);
         TCPSendThread sendThread = new TCPSendThread(clientSocket);
         System.out.println("Venter på Server authorisation: ");
             receiverThread.start();
             sendThread.start();
 
-//        clientSocket.close();
     }
     public static Socket connectToClient(String CallID) throws IOException {
         Socket DNSSocket = new Socket(DNSSERVER, 7777);

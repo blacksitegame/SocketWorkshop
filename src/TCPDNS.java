@@ -19,7 +19,6 @@ public class TCPDNS {
             TCPDNSThread thread = new TCPDNSThread(connectionSocket);
             thread.start();
         }
-
     }
 }
 
