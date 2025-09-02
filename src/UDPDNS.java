@@ -4,7 +4,7 @@ import java.net.Socket;
 
 public class UDPDNS {
     public static void main(String[] args) throws Exception {
-        DatagramSocket welcomSocket = new DatagramSocket(7777);
+        DatagramSocket welcomSocket = new DatagramSocket(7778);
         while(true) {
             System.out.println("Serveren venter på klient");
             UDPDNSThread thread = new UDPDNSThread(welcomSocket);

@@ -17,7 +17,7 @@ public class UDPDNSThread extends Thread {
         this.socket = socket;
 
         CallNameIps.put("Jonas", "10.10.131.169 6789 \n");
-        CallNameIps.put("Rasmus", "10.10.130.132 6789 \n");
+        CallNameIps.put("Rasmus", "10.10.130.100 6789 \n");
         CallNameIps.put("Victor", "10.10.132.157 6789 \n");
     }
 
