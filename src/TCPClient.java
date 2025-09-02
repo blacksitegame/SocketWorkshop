@@ -38,15 +38,13 @@ public class TCPClient {
     }
     public static Socket connectToClientUDP(String CallID) throws IOException {
         byte[] receiveBuffer = new byte[1024];
-        DatagramSocket DNSSocket = new DatagramSocket(7778);
+        DatagramSocket DNSSocket = new DatagramSocket(6500);
         Socket clientSocket = null;
-        if (!DNSSocket.isConnected()) {
-            System.out.println("DNS Server not avaliable");
-            return clientSocket;
-        }
-        byte[] CallIdByte = CallID.getBytes();
 
-        DatagramPacket sendPacket = new DatagramPacket(CallIdByte,CallIdByte.length);
+        byte[] CallIdByte = CallID.getBytes();
+        InetAddress ip = InetAddress.getByName(DNSSERVER);
+        DatagramPacket sendPacket = new DatagramPacket(CallIdByte,CallIdByte.length,ip,7778);
+        DNSSocket.send(sendPacket);
         DNSSocket.send(sendPacket);
 
         DatagramPacket requestPacket = new DatagramPacket(receiveBuffer, receiveBuffer.length);

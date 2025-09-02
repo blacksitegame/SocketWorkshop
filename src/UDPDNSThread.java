@@ -37,6 +37,7 @@ public class UDPDNSThread extends Thread {
 
                 byte[] sendBuffer = responseMessage.getBytes();
                 InetAddress clientAddress = requestPacket.getAddress();
+
                 int clientPort = requestPacket.getPort();
 
                 DatagramPacket responsePacket = new DatagramPacket(sendBuffer, sendBuffer.length, clientAddress, clientPort);
